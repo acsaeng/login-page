@@ -3,7 +3,7 @@ import { auth } from '../../config/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button, Form } from 'react-bootstrap';
-import { BUTTON_LABELS, ERROR_MESSAGE, FORM_FIELDS } from './constant';
+import { BUTTON_LABELS, ERROR_MESSAGE, FORM_FIELDS } from './constants';
 
 import './SignIn.scss';
 
