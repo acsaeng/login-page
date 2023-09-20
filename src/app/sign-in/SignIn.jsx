@@ -68,7 +68,7 @@ const SignIn = () => {
                 <span className='sign-in__error-message'>{errorMessage}</span>
               )}
               <div className='sign-in__links-container'>
-                <Link className='sign-in__account-link' href='/registration'>
+                <Link className='sign-in__account-link' href='/sign-up'>
                   {BUTTON_LABELS.SIGN_UP_LABEL}
                 </Link>
                 <span className='sign-in__delimiter'>·</span>
