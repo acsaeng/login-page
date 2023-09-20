@@ -1,6 +1,6 @@
 @import '../../scss/base-import';
 
-.forgot-password {
+.sign-in {
   display: flex;
   width: 100%;
   height: 100vh;
@@ -22,37 +22,22 @@
     }
   }
 
-  &__back-button {
-    align-self: start;
-    margin-bottom: 10px;
-    font-size: 12px;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-
-    @include media-breakpoint-up(md) {
-      margin-bottom: none;
-    }
-  }
-
   &__logo {
     width: 300px;
+    height: auto;
+    margin-bottom: 10px;
+  }
+
+  &__title {
     margin-bottom: 30px;
   }
 
-  &__header {
-    align-self: start;
-    margin-bottom: 15px;
-  }
-
   &__form {
-    display: flex;
     flex-direction: column;
   }
 
-  &__email-input {
+  &__email-input,
+  &__password-input {
     width: 300px !important;
     margin-bottom: 10px;
 
@@ -61,24 +46,46 @@
     }
   }
 
-  &__message-and-submit-container {
+  &__message-and-ctas-container {
     display: flex;
   }
 
-  &__message {
+  &__message-and-links-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto;
+    height: 100%;
+  }
+
+  &__error-message {
+    margin-bottom: 3px;
     font-size: 11px;
-    margin-top: -5px;
+    color: red;
+  }
 
-    &--success {
-      color: green;
-    }
+  &__links-container {
+    font-size: 12px;
+  }
 
-    &--error {
-      color: red;
+  &__account-link {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
     }
   }
 
-  &__submit-button {
+  &__delimiter {
+    margin: 0 5px;
+    color: darkgrey;
+    font-weight: 700;
+
+    @include media-breakpoint-up(md) {
+      margin: 0 7px;
+    }
+  }
+
+  &__sign-in-button {
     margin-left: auto;
   }
 }
