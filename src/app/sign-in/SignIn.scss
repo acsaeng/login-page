@@ -10,7 +10,8 @@
   &__main-container {
     display: flex;
     flex-direction: column;
-    max-width: 93%;
+    width: 600px;
+    max-width: 95%;
     align-items: center;
     padding: 20px 30px 40px;
     background: lightgrey;
@@ -34,16 +35,11 @@
 
   &__form {
     flex-direction: column;
+    width: 100%;
   }
 
-  &__email-input,
-  &__password-input {
-    width: 300px !important;
+  &__input {
     margin-bottom: 10px;
-
-    @include media-breakpoint-up(md) {
-      width: 500px !important;
-    }
   }
 
   &__message-and-ctas-container {

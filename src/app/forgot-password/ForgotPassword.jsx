@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { auth } from '../../config/firebase';
+import { sendPasswordResetEmail } from 'firebase/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, Form } from 'react-bootstrap';
@@ -9,7 +10,6 @@ import CompanyLogo from '../../img/logo.jpg';
 import { BUTTON_LABELS, FORM_FIELDS, FORM_MESSAGES } from './constants';
 
 import './ForgotPassword.scss';
-import { sendPasswordResetEmail } from 'firebase/auth';
 
 const ForgotPassword = () => {
   const [error, setError] = useState(false);
@@ -47,6 +47,7 @@ const ForgotPassword = () => {
             className='forgot-password__email-input'
             name='email'
             placeholder={FORM_FIELDS.EMAIL_INPUT_PlACEHOLDER}
+            required
             type='email'
           />
           <div className='forgot-password__message-and-submit-container'>

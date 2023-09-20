@@ -16,8 +16,6 @@ const SignIn = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const route = useRouter();
 
-  useRouter;
-
   const onSignIn = async (event) => {
     event.preventDefault();
 
@@ -49,17 +47,19 @@ const SignIn = () => {
         <h2 className='sign-in__title'>{FORM_FIELDS.HEADER}</h2>
         <Form className='sign-in__form' onSubmit={onSignIn}>
           <Form.Control
-            className='sign-in__email-input'
+            className='sign-in__input'
             name='email'
             onChange={() => setErrorMessage('')}
             placeholder={FORM_FIELDS.EMAIL_INPUT_PlACEHOLDER}
+            required
             type='email'
           />
           <Form.Control
-            className='sign-in__password-input'
+            className='sign-in__input'
             name='password'
             onChange={() => setErrorMessage('')}
             placeholder={FORM_FIELDS.PASSWORD_INPUT_PlACEHOLDER}
+            required
             type='password'
           />
           <div className='sign-in__message-and-ctas-container'>
