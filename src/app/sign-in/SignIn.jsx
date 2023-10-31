@@ -6,14 +6,20 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
+import PAGE from '@/common/routes';
 import CompanyLogo from '../../img/logo.jpg';
-import { BUTTON_LABELS, ERROR_MESSAGE, FORM_FIELDS } from './constants';
+import {
+  FORM_FIELDS,
+  FORM_LABELS,
+  LOGO_IMAGE_ALT,
+  MODAL_LABELS,
+} from './constants';
 
 import './SignIn.scss';
 
 const SignIn = () => {
-  const [errorMessage, setErrorMessage] = useState('');
+  const [showErrorModal, setShowErrorModal] = useState(false);
   const route = useRouter();
 
   const onSignIn = async (event) => {
@@ -27,62 +33,76 @@ const SignIn = () => {
           event.target.password.value
         )
       ) {
-        route.push('/home');
+        route.push(PAGE.HOME);
       }
     } catch (error) {
-      setErrorMessage(ERROR_MESSAGE);
+      setShowErrorModal(true);
     }
   };
 
   return (
     <div className='sign-in'>
-      <div className='sign-in__main-container'>
+      <div className='sign-in__container'>
         <Image
-          alt='Company logo'
+          alt={LOGO_IMAGE_ALT}
           className='sign-in__logo'
           placeholder='blur'
           quality={100}
           src={CompanyLogo}
         />
-        <h2 className='sign-in__title'>{FORM_FIELDS.HEADER}</h2>
+        <h2 className='sign-in__title'>{FORM_LABELS.FORM_HEADER}</h2>
         <Form className='sign-in__form' onSubmit={onSignIn}>
           <Form.Control
             className='sign-in__input'
-            name='email'
-            onChange={() => setErrorMessage('')}
-            placeholder={FORM_FIELDS.EMAIL_INPUT_PlACEHOLDER}
+            name={FORM_FIELDS.EMAIL.name}
+            placeholder={FORM_FIELDS.EMAIL.label}
             required
-            type='email'
+            type={FORM_FIELDS.EMAIL.type}
           />
           <Form.Control
             className='sign-in__input'
-            name='password'
-            onChange={() => setErrorMessage('')}
-            placeholder={FORM_FIELDS.PASSWORD_INPUT_PlACEHOLDER}
+            name={FORM_FIELDS.PASSWORD.name}
+            placeholder={FORM_FIELDS.PASSWORD.label}
             required
-            type='password'
+            type={FORM_FIELDS.PASSWORD.type}
           />
           <div className='sign-in__message-and-ctas-container'>
-            <div className='sign-in__message-and-links-container'>
-              {errorMessage && (
-                <span className='sign-in__error-message'>{errorMessage}</span>
-              )}
-              <div className='sign-in__links-container'>
-                <Link className='sign-in__account-link' href='/sign-up'>
-                  {BUTTON_LABELS.SIGN_UP_LABEL}
-                </Link>
-                <span className='sign-in__delimiter'>·</span>
-                <Link className='sign-in__account-link' href='/forgot-password'>
-                  {BUTTON_LABELS.FORGOT_PASSWORD_LABEL}
-                </Link>
-              </div>
+            <div className='sign-in__links-container'>
+              <Link className='sign-in__account-link' href={PAGE.SIGN_UP}>
+                {FORM_LABELS.SIGN_UP_LABEL}
+              </Link>
+              <span className='sign-in__delimiter'>·</span>
+              <Link
+                className='sign-in__account-link'
+                href={PAGE.FORGOT_PASSWORD}
+              >
+                {FORM_LABELS.FORGOT_PASSWORD_LABEL}
+              </Link>
             </div>
             <Button className='sign-in__sign-in-button' type='submit'>
-              {BUTTON_LABELS.SUBMIT_LABEL}
+              {FORM_LABELS.SUBMIT_BUTTON_LABEL}
             </Button>
           </div>
         </Form>
       </div>
+      <Modal
+        backdrop='static'
+        className='sign-in__error-modal'
+        centered
+        show={showErrorModal}
+      >
+        <Modal.Header>
+          <Modal.Title>{MODAL_LABELS.TITLE}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <p>{MODAL_LABELS.BODY}</p>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={() => setShowErrorModal(false)}>
+            {MODAL_LABELS.BUTTON}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

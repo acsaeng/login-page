@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
 
-  &__main-container {
+  &__container {
     display: flex;
     flex-direction: column;
     width: 600px;
@@ -44,19 +44,6 @@
 
   &__message-and-ctas-container {
     display: flex;
-  }
-
-  &__message-and-links-container {
-    display: flex;
-    flex-direction: column;
-    margin-top: auto;
-    height: 100%;
-  }
-
-  &__error-message {
-    margin-bottom: 3px;
-    font-size: 11px;
-    color: red;
   }
 
   &__links-container {

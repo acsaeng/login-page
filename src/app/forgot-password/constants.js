@@ -1,14 +1,20 @@
-export const BUTTON_LABELS = {
+export const EMAIL_FORM_FIELDS = {
+  label: 'Email address',
+  maxLength: 100,
+  name: 'email',
+  type: 'email',
+};
+
+export const FORM_LABELS = {
+  FORM_HEADER: 'Enter your email address below',
   BACK_LABEL: '< Back',
   SUBMIT_LABEL: 'Submit',
 };
 
-export const FORM_FIELDS = {
-  HEADER: 'Enter your email address below',
-  EMAIL_INPUT_PlACEHOLDER: 'Email address',
-};
+export const LOGO_IMAGE_ALT = 'Company logo';
 
-export const FORM_MESSAGES = {
-  EMAIL_CONFIRMATION_SUCCESS_MESSAGE: 'A confirmation email has been sent',
-  ERROR_MESSAGE: 'This email address is invalid',
+export const MODAL_LABELS = {
+  TITLE: 'Confirmation email sent',
+  BODY: 'A recovery link has been sent to your email.',
+  BUTTON: 'Sign In',
 };
