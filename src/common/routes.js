@@ -1,8 +1,8 @@
 const PAGE = {
-  FORGOT_PASSWORD: '/forgot-password',
+  FORGOT_PASSWORD: '/auth/forgot-password',
   HOME: '/home',
-  SIGN_IN: '/sign-in',
-  SIGN_UP: '/sign-up',
+  SIGN_IN: '/auth/sign-in',
+  SIGN_UP: '/auth/sign-up',
 };
 
 export default PAGE;

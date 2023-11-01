@@ -42,19 +42,14 @@ export const FORM_LABELS = {
   SUBMIT_BUTTON: 'Sign Up',
 };
 
-export const FORM_MESSAGES = {
-  EMAIL_CONFIRMATION_SUCCESS_MESSAGE: 'A verification email has been sent',
-  ERROR_MESSAGE: 'Sorry, an error occurred',
-};
-
-export const FORM_STATUS = {
-  ERROR: 'error',
-  PENDING: 'pending',
-  SUCCESS: 'success',
-};
-
 export const MODAL_LABELS = {
-  TITLE: 'Account created!',
-  BODY: 'A verification link has been sent to your email.',
-  BUTTON: 'Sign In',
+  SUCCESS: {
+    TITLE: 'Account created!',
+    BODY: 'A verification link has been sent to your email.',
+    BUTTON: 'Sign In',
+  },
+  ERROR: {
+    TITLE: 'Error',
+    BUTTON: 'Continue',
+  },
 };

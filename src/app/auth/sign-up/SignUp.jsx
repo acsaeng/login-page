@@ -1,24 +1,22 @@
 'use client';
 
 import React, { useState } from 'react';
-import { auth } from '../../config/firebase';
-import { createUserWithEmailAndPassword, sendEmailVerification } from 'firebase/auth';
+import { auth } from '../../../config/firebase';
+import {
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+} from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { isEmpty } from 'lodash';
 import { Button, Form, Modal } from 'react-bootstrap';
 import PAGE from '@/common/routes';
-import {
-  FORM_FIELDS,
-  FORM_LABELS,
-  FORM_MESSAGES,
-  FORM_STATUS,
-  MODAL_LABELS,
-} from './constants';
+import { FORM_FIELDS, FORM_LABELS, MODAL_LABELS } from './constants';
 
 import './SignUp.scss';
 
 const SignUp = () => {
-  const [formStatus, setFormStatus] = useState(FORM_STATUS.PENDING);
+  const [modalContent, setModalContent] = useState({});
   const route = useRouter();
 
   const onSubmit = async (event) => {
@@ -31,10 +29,25 @@ const SignUp = () => {
         event.target.password.value
       );
       await sendEmailVerification(auth.currentUser);
-      console.log('current user', auth.currentUser);
-      setFormStatus(FORM_STATUS.SUCCESS);
+      setModalContent({
+        title: MODAL_LABELS.SUCCESS.TITLE,
+        body: MODAL_LABELS.SUCCESS.BODY,
+        button: MODAL_LABELS.SUCCESS.BUTTON,
+        buttonEvent: () => route.push(PAGE.SIGN_IN),
+      });
     } catch (error) {
-      setFormStatus(FORM_STATUS.ERROR);
+      const errorMessage = error.message
+        .substring(
+          error.message.indexOf('/') + 1,
+          error.message.lastIndexOf(')')
+        )
+        .replaceAll('-', ' ');
+      setModalContent({
+        title: MODAL_LABELS.ERROR.TITLE,
+        body: errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1),
+        button: MODAL_LABELS.ERROR.BUTTON,
+        buttonEvent: () => setModalContent({}),
+      });
     }
   };
 
@@ -51,7 +64,6 @@ const SignUp = () => {
               className='sign-up__first-name-input'
               maxLength={FORM_FIELDS.FIRST_NAME.maxLength}
               name={FORM_FIELDS.FIRST_NAME.name}
-              onChange={() => setFormStatus(FORM_STATUS.PENDING)}
               placeholder={FORM_FIELDS.FIRST_NAME.label}
               required
             />
@@ -59,7 +71,6 @@ const SignUp = () => {
               className='sign-up__last-name-input'
               maxLength={FORM_FIELDS.LAST_NAME.maxLength}
               name={FORM_FIELDS.LAST_NAME.name}
-              onChange={() => setFormStatus(FORM_STATUS.PENDING)}
               placeholder={FORM_FIELDS.LAST_NAME.label}
               required
             />
@@ -68,7 +79,6 @@ const SignUp = () => {
             className='sign-up__email-input'
             maxLength={FORM_FIELDS.EMAIL.maxLength}
             name={FORM_FIELDS.EMAIL.name}
-            onChange={() => setFormStatus(FORM_STATUS.PENDING)}
             placeholder={FORM_FIELDS.EMAIL.label}
             required
             type={FORM_FIELDS.EMAIL.type}
@@ -76,7 +86,6 @@ const SignUp = () => {
           <Form.Control
             className='sign-up__password-input'
             name={FORM_FIELDS.PASSWORD.name}
-            onChange={() => setFormStatus(FORM_STATUS.PENDING)}
             // pattern={FORM_FIELDS.PASSWORD.pattern}
             title={FORM_FIELDS.PASSWORD.title}
             placeholder={FORM_FIELDS.PASSWORD.label}
@@ -86,7 +95,6 @@ const SignUp = () => {
           <Form.Control
             className='sign-up__dob-input'
             name={FORM_FIELDS.DOB.name}
-            onChange={() => setFormStatus(FORM_STATUS.PENDING)}
             placeholder={FORM_FIELDS.DOB.label}
             required
             type={FORM_FIELDS.DOB.type}
@@ -94,7 +102,6 @@ const SignUp = () => {
           <Form.Select
             className='sign-up__gender-input'
             name={FORM_FIELDS.GENDER.name}
-            onChange={() => setFormStatus(FORM_STATUS.PENDING)}
             placeholder={FORM_FIELDS.GENDER.label}
             required
           >
@@ -104,40 +111,31 @@ const SignUp = () => {
               </option>
             ))}
           </Form.Select>
-          <div className='sign-up__message-and-submit-container'>
-            {formStatus === FORM_STATUS.ERROR && (
-              <span className='sign-up__error-message'>
-                {FORM_MESSAGES.ERROR_MESSAGE}
-              </span>
-            )}
-            <Button
-              className='sign-up__submit-button'
-              disabled={formStatus !== FORM_STATUS.PENDING}
-              type='submit'
-            >
-              {FORM_LABELS.SUBMIT_BUTTON}
-            </Button>
-          </div>
+          <Button className='sign-up__submit-button' type='submit'>
+            {FORM_LABELS.SUBMIT_BUTTON}
+          </Button>
         </Form>
       </div>
-      <Modal
-        backdrop='static'
-        className='sign-up__success-modal'
-        centered
-        show={formStatus === FORM_STATUS.SUCCESS}
-      >
-        <Modal.Header>
-          <Modal.Title>{MODAL_LABELS.TITLE}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>{MODAL_LABELS.BODY}</p>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={() => route.push(PAGE.SIGN_IN)}>
-            {MODAL_LABELS.BUTTON}
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      {!isEmpty(modalContent) && (
+        <Modal
+          backdrop='static'
+          className='sign-up__success-modal'
+          centered
+          show
+        >
+          <Modal.Header>
+            <Modal.Title>{modalContent.title}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <p>{modalContent.body}</p>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={modalContent.buttonEvent}>
+              {modalContent.button}
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 };
