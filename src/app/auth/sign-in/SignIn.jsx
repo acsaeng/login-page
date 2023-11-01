@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { Button, Form, Modal } from 'react-bootstrap';
 import PAGE from '@/common/routes';
-import CompanyLogo from '../../img/logo.jpg';
+import CompanyLogo from '../../../img/logo.jpg';
 import {
   FORM_FIELDS,
   FORM_LABELS,

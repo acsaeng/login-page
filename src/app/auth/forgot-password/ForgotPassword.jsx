@@ -1,14 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import { auth } from '../../config/firebase';
+import { auth } from '../../../config/firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, Form, Modal } from 'react-bootstrap';
 import PAGE from '@/common/routes';
-import CompanyLogo from '../../img/logo.jpg';
+import CompanyLogo from '../../../img/logo.jpg';
 import {
   EMAIL_FORM_FIELDS,
   FORM_LABELS,
