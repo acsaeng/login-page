@@ -20,7 +20,7 @@ import './ForgotPassword.scss';
 
 const ForgotPassword = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const route = useRouter();
+  const router = useRouter();
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -31,7 +31,7 @@ const ForgotPassword = () => {
   return (
     <div className='forgot-password'>
       <div className='forgot-password__container'>
-        <Link className='forgot-password__back-button' href='/'>
+        <Link className='forgot-password__back-button' href={PAGE.SIGN_IN}>
           {FORM_LABELS.BACK_LABEL}
         </Link>
         <Image
@@ -69,7 +69,7 @@ const ForgotPassword = () => {
           <p>{MODAL_LABELS.BODY}</p>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={() => route.push(PAGE.SIGN_IN)}>
+          <Button onClick={() => router.push(PAGE.SIGN_IN)}>
             {MODAL_LABELS.BUTTON}
           </Button>
         </Modal.Footer>

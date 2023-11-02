@@ -1,11 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
-import { auth } from '../../../config/firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../../config/firebase';
 import { Button, Form, Modal } from 'react-bootstrap';
 import PAGE from '@/common/routes';
 import CompanyLogo from '../../../img/logo.jpg';
@@ -20,7 +20,7 @@ import './SignIn.scss';
 
 const SignIn = () => {
   const [showErrorModal, setShowErrorModal] = useState(false);
-  const route = useRouter();
+  const router = useRouter();
 
   const onSignIn = async (event) => {
     event.preventDefault();
@@ -33,12 +33,20 @@ const SignIn = () => {
           event.target.password.value
         )
       ) {
-        route.push(PAGE.HOME);
+        router.push(PAGE.HOME);
       }
     } catch (error) {
       setShowErrorModal(true);
     }
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        router.push(PAGE.HOME);
+      }
+    });
+  }, []);
 
   return (
     <div className='sign-in'>

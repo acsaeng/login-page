@@ -17,7 +17,7 @@ import './SignUp.scss';
 
 const SignUp = () => {
   const [modalContent, setModalContent] = useState({});
-  const route = useRouter();
+  const router = useRouter();
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -33,7 +33,7 @@ const SignUp = () => {
         title: MODAL_LABELS.SUCCESS.TITLE,
         body: MODAL_LABELS.SUCCESS.BODY,
         button: MODAL_LABELS.SUCCESS.BUTTON,
-        buttonEvent: () => route.push(PAGE.SIGN_IN),
+        buttonEvent: () => router.push(PAGE.SIGN_IN),
       });
     } catch (error) {
       const errorMessage = error.message
