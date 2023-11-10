@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../../../config/firebase';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { signInUser } from '@/utils/auth';
 import PAGE from '@/common/routes';
 import CompanyLogo from '../../../img/logo.jpg';
 import {
@@ -27,11 +28,7 @@ const SignIn = () => {
 
     try {
       if (
-        await signInWithEmailAndPassword(
-          auth,
-          event.target.email.value,
-          event.target.password.value
-        )
+        await signInUser(event.target.email.value, event.target.password.value)
       ) {
         router.push(PAGE.HOME);
       }

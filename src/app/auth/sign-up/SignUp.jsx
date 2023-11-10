@@ -1,15 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { auth } from '../../../config/firebase';
-import {
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-} from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { isEmpty } from 'lodash';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { signUpUser } from '@/utils/auth';
 import PAGE from '@/common/routes';
 import { FORM_FIELDS, FORM_LABELS, MODAL_LABELS } from './constants';
 
@@ -23,12 +19,7 @@ const SignUp = () => {
     event.preventDefault();
 
     try {
-      await createUserWithEmailAndPassword(
-        auth,
-        event.target.email.value,
-        event.target.password.value
-      );
-      await sendEmailVerification(auth.currentUser);
+      signUpUser(event.target.email.value, event.target.password.value);
       setModalContent({
         title: MODAL_LABELS.SUCCESS.TITLE,
         body: MODAL_LABELS.SUCCESS.BODY,

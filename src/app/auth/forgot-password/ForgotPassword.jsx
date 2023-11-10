@@ -1,12 +1,11 @@
 'use client';
 
 import React, { useState } from 'react';
-import { auth } from '../../../config/firebase';
-import { sendPasswordResetEmail } from 'firebase/auth';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { resetPassword } from '@/utils/auth';
 import PAGE from '@/common/routes';
 import CompanyLogo from '../../../img/logo.jpg';
 import {
@@ -24,7 +23,7 @@ const ForgotPassword = () => {
 
   const onSubmit = async (event) => {
     event.preventDefault();
-    await sendPasswordResetEmail(auth, event.target.email.value);
+    await resetPassword(event.target.email.value);
     setShowSuccessModal(true);
   };
 

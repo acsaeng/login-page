@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/config/firebase';
 import { Container, Navbar } from 'react-bootstrap';
+import { signOutUser } from '@/utils/auth';
 import PAGE from '@/common/routes';
 
 import './Home.scss';
@@ -15,7 +16,7 @@ const Home = () => {
   const router = useRouter();
 
   const onSignOut = async () => {
-    await signOut(auth);
+    await signOutUser();
     router.push(PAGE.SIGN_IN);
   };
 
