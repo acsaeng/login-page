@@ -4,7 +4,7 @@
 
 ## Summary
 
-A simple login page that can be incorporated into other small projects. This application implrments Firebase authentication, allowing users to create an account with e-mail verification, sign in, or recover a lost password.
+A simple login page that can be incorporated into other small projects. This application implements Firebase authentication, allowing users to create an account with e-mail verification, sign in, or recover a lost password.
 
 To run the application locally:
 
