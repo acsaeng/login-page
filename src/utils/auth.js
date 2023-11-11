@@ -10,7 +10,6 @@ import {
 const signUpUser = async (email, password) => {
   await createUserWithEmailAndPassword(auth, email, password);
   await sendEmailVerification(auth.currentUser);
-  await signOutUser();
 };
 
 const signInUser = async (email, password) => {
