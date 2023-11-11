@@ -25,31 +25,29 @@ const Home = () => {
       if (user) {
         setIsAuthorized(true);
       } else {
-        router.push(PAGE.NOT_FOUND);
+        router.push(PAGE.SIGN_IN);
       }
     });
   }, []);
 
   return (
-    <>
-      {isAuthorized && (
-        <div className='home'>
-          <Navbar className='home__navbar'>
-            <Container>
-              <Navbar.Brand href={PAGE.HOME}>Company name</Navbar.Brand>
-              <Navbar.Toggle />
-              <Navbar.Collapse className='home__navbar-collapse'>
-                <Navbar.Text>
-                  <Link href={PAGE.SIGN_IN} onClick={() => onSignOut()}>
-                    Sign out
-                  </Link>
-                </Navbar.Text>
-              </Navbar.Collapse>
-            </Container>
-          </Navbar>
-        </div>
-      )}
-    </>
+    isAuthorized && (
+      <div className='home'>
+        <Navbar className='home__navbar'>
+          <Container>
+            <Navbar.Brand href={PAGE.HOME}>Company name</Navbar.Brand>
+            <Navbar.Toggle />
+            <Navbar.Collapse className='home__navbar-collapse'>
+              <Navbar.Text>
+                <Link href={PAGE.SIGN_IN} onClick={() => onSignOut()}>
+                  Sign out
+                </Link>
+              </Navbar.Text>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
+      </div>
+    )
   );
 };
 

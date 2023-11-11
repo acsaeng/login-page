@@ -4,10 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../../../config/firebase';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { signInUser } from '@/utils/auth';
+import { signInUser, signOutUser } from '@/utils/auth';
 import PAGE from '@/common/routes';
 import CompanyLogo from '../../../img/logo.jpg';
 import {
@@ -18,12 +16,15 @@ import {
 } from './constants';
 
 import './SignIn.scss';
+import Loader from '@/app/components/Loader/Loader';
 
 const SignIn = () => {
+  const [showLoader, setShowLoader] = useState(false);
   const [showErrorModal, setShowErrorModal] = useState(false);
   const router = useRouter();
 
   const onSignIn = async (event) => {
+    setShowLoader(true);
     event.preventDefault();
 
     try {
@@ -33,20 +34,18 @@ const SignIn = () => {
         router.push(PAGE.HOME);
       }
     } catch (error) {
+      setShowLoader(false);
       setShowErrorModal(true);
     }
   };
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        router.push(PAGE.HOME);
-      }
-    });
+    signOutUser();
   }, []);
 
   return (
     <div className='sign-in'>
+      <Loader isVisible={showLoader} />
       <div className='sign-in__container'>
         <Image
           alt={LOGO_IMAGE_ALT}

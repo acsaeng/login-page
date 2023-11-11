@@ -1,30 +1,32 @@
 'use client';
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { isEmpty } from 'lodash';
 import { Button, Form, Modal } from 'react-bootstrap';
-import { signUpUser } from '@/utils/auth';
+import { signOutUser, signUpUser } from '@/utils/auth';
 import PAGE from '@/common/routes';
 import { FORM_FIELDS, FORM_LABELS, MODAL_LABELS } from './constants';
 
 import './SignUp.scss';
+import Loader from '@/app/components/Loader/Loader';
 
 const SignUp = () => {
+  const [showLoader, setShowLoader] = useState(false);
   const [modalContent, setModalContent] = useState({});
-  const router = useRouter();
-
   const onSubmit = async (event) => {
+    setShowLoader(true);
     event.preventDefault();
 
     try {
-      signUpUser(event.target.email.value, event.target.password.value);
+      await signUpUser(event.target.email.value, event.target.password.value);
+      await signOutUser();
       setModalContent({
         title: MODAL_LABELS.SUCCESS.TITLE,
         body: MODAL_LABELS.SUCCESS.BODY,
         button: MODAL_LABELS.SUCCESS.BUTTON,
-        buttonEvent: () => router.push(PAGE.SIGN_IN),
+        buttonEvent: null,
+        href: PAGE.SIGN_IN,
       });
     } catch (error) {
       const errorMessage = error.message
@@ -38,14 +40,22 @@ const SignUp = () => {
         body: errorMessage.charAt(0).toUpperCase() + errorMessage.slice(1),
         button: MODAL_LABELS.ERROR.BUTTON,
         buttonEvent: () => setModalContent({}),
+        href: null,
       });
     }
+
+    setShowLoader(false);
   };
+
+  useEffect(() => {
+    signOutUser();
+  }, []);
 
   return (
     <div className='sign-up'>
+      <Loader isVisible={showLoader} />
       <div className='sign-up__container'>
-        <Link className='sign-up__back-button' href={PAGE.SIGN_IN}>
+        <Link className='sign-up__back-button' href={PAGE.FORGOT_PASSWORD}>
           {FORM_LABELS.BACK_LINK}
         </Link>
         <h6 className='sign-up__header'>{FORM_LABELS.FORM_HEADER}</h6>
@@ -121,7 +131,7 @@ const SignUp = () => {
             <p>{modalContent.body}</p>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={modalContent.buttonEvent}>
+            <Button onClick={modalContent.buttonEvent} href={modalContent.href}>
               {modalContent.button}
             </Button>
           </Modal.Footer>
