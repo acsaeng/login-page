@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -16,19 +16,28 @@ import {
 } from './constants';
 
 import './ForgotPassword.scss';
+import Loader from '@/app/components/Loader/Loader';
 
 const ForgotPassword = () => {
+  const [showLoader, setShowLoader] = useState(false);
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const router = useRouter();
 
   const onSubmit = async (event) => {
+    setShowLoader(true);
     event.preventDefault();
     await resetPassword(event.target.email.value);
     setShowSuccessModal(true);
+    setShowLoader(false);
   };
+
+  useEffect(() => {
+    signOutUser();
+  }, []);
 
   return (
     <div className='forgot-password'>
+      <Loader isVisible={showLoader} />
       <div className='forgot-password__container'>
         <Link className='forgot-password__back-button' href={PAGE.SIGN_IN}>
           {FORM_LABELS.BACK_LABEL}
