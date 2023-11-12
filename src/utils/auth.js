@@ -13,7 +13,7 @@ const signUpUser = async (email, password) => {
 };
 
 const signInUser = async (email, password) => {
-  await signInWithEmailAndPassword(auth, email, password);
+  return await signInWithEmailAndPassword(auth, email, password);
 };
 
 const signOutUser = async () => {
